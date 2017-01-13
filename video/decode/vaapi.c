@@ -57,16 +57,17 @@ static int init_decoder(struct lavc_ctx *ctx, int w, int h)
     // The video output might not support all formats.
     // Note that supported_formats==NULL means any are accepted.
     if (p->hwdev && p->hwdev->supported_formats) {
+        int mp_format = pixfmt2imgfmt(required_sw_format);
         bool found = false;
         for (int n = 0; p->hwdev->supported_formats[n]; n++) {
-            if (p->hwdev->supported_formats[n] == required_sw_format) {
+            if (p->hwdev->supported_formats[n] == mp_format) {
                 found = true;
                 break;
             }
         }
         if (!found) {
             MP_WARN(ctx, "Surface format %s not supported for direct rendering.\n",
-                    mp_imgfmt_to_name(required_sw_format));
+                    mp_imgfmt_to_name(mp_format));
             return -1;
         }
     }
