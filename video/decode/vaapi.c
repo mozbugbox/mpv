@@ -64,8 +64,8 @@ static int init_decoder(struct lavc_ctx *ctx, int w, int h)
                 break;
             }
         }
-        if (found) {
-            MP_WARN(ctx, "Surface format %s not supported for direcr rendering.\n",
+        if (!found) {
+            MP_WARN(ctx, "Surface format %s not supported for direct rendering.\n",
                     mp_imgfmt_to_name(required_sw_format));
             return -1;
         }
