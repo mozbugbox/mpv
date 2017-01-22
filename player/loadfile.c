@@ -1496,11 +1496,11 @@ void open_recorder(struct MPContext *mpctx)
     if (!mpctx->playback_initialized)
         return;
 
+    close_recorder(mpctx);
+
     char *target = mpctx->opts->record_file;
-    if (!target || !target[0]) {
-        close_recorder(mpctx);
+    if (!target || !target[0])
         return;
-    }
 
     struct sh_stream **streams = NULL;
     int num_streams = 0;
