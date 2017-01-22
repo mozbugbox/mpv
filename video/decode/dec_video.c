@@ -42,6 +42,8 @@
 
 #include "video/decode/dec_video.h"
 
+#include "player/recorder.h"
+
 extern const vd_functions_t mpcodecs_vd_ffmpeg;
 
 /* Please do not add any new decoders here. If you want to implement a new
@@ -423,6 +425,9 @@ void video_work(struct dec_video *d_video)
     d_video->vd_driver->control(d_video, VDCTRL_SET_FRAMEDROP, &framedrop_type);
 
     if (send_packet(d_video, d_video->packet)) {
+        if (d_video->recorder_sink)
+            mp_recorder_feed_packet(d_video->recorder_sink, d_video->packet);
+
         talloc_free(d_video->packet);
         d_video->packet = NULL;
     }

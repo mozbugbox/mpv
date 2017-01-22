@@ -238,6 +238,7 @@ def build(ctx):
         ( "player/lua.c",                        "lua" ),
         ( "player/osd.c" ),
         ( "player/playloop.c" ),
+        ( "player/recorder.c" ),
         ( "player/screenshot.c" ),
         ( "player/scripting.c" ),
         ( "player/sub.c" ),

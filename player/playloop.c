@@ -50,6 +50,7 @@
 #include "core.h"
 #include "client.h"
 #include "command.h"
+#include "recorder.h"
 
 // Wait until mp_wakeup_core() is called, since the last time
 // mp_wait_events() was called.
@@ -330,6 +331,8 @@ static void mp_seek(MPContext *mpctx, struct seek_params seek)
         clear_audio_output_buffers(mpctx);
 
     reset_playback_state(mpctx);
+    if (mpctx->recorder)
+        mp_recorder_mark_discontinuity(mpctx->recorder);
 
     /* Use the target time as "current position" for further relative
      * seeks etc until a new video frame has been decoded */

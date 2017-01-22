@@ -42,6 +42,8 @@
 
 #include "audio/filter/af.h"
 
+#include "player/recorder.h"
+
 extern const struct ad_functions ad_lavc;
 
 // Not a real codec - specially treated.
@@ -218,6 +220,9 @@ void audio_work(struct dec_audio *da)
     }
 
     if (da->ad_driver->send_packet(da, da->packet)) {
+        if (da->recorder_sink)
+            mp_recorder_feed_packet(da->recorder_sink, da->packet);
+
         talloc_free(da->packet);
         da->packet = NULL;
     }
